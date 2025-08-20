@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
 from api.models import db
-from api.routes import api
+from api.routes import api, bcrypt, jwt
 from api.admin import setup_admin
 from api.commands import setup_commands
 
@@ -30,6 +30,10 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
+
+# Initialize bcrypt and JWT
+bcrypt.init_app(app)
+jwt.init_app(app)
 
 # add the admin
 setup_admin(app)
